@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 session_start();
             }
             $_SESSION['username'] = $username;
-            $_SESSION['password'] = '123';
+            $_SESSION['password'] = $password;
             header('Location: osnova.php');
             exit();
         }
