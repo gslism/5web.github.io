@@ -31,14 +31,14 @@ try {
         if (!empty($_COOKIE['save'])) {
             // Удаляем куку, указывая время устаревания в прошлом.
             setcookie('save', '', 100000);
-            setcookie('login', '', 100000);
+            setcookie('username', '', 100000);
             setcookie('password', '', 100000);
             // Выводим сообщение пользователю.
-            $messages[] = 'Спасибо, результаты сохранены.';
+            $messages[] = 'Спасибо, результаты сохранены.</br>';
             // Если в куках есть пароль, то выводим сообщение.
             if (!empty($_COOKIE['password'])) {
-              $messages[] = sprintf('Вы можете <a href="signin.php"> войти</a></br>  с логином </br> и паролем</br><strong>%s</strong> <strong>%s</strong> для изменения данных.',
-                strip_tags($_COOKIE['login']),
+              $messages[] = sprintf('Вы можете <a href="signin.php"> войти</a></br>  с логином <strong>%s</strong> </br> и паролем</br> <strong>%s</strong> </br> для изменения данных.',
+                strip_tags($_COOKIE['username']),
                 strip_tags($_COOKIE['password']));
             }
           }
@@ -108,7 +108,7 @@ if (
     empty($errors) && !empty($_COOKIE[session_name()]) &&
     session_start() && !empty($_SESSION['username'])
 ) {
-    $stmt = $db->prepare("SELECT full_name, phone, email, birth_date, gender, bio, contract_agreed FROM users WHERE login = :username");
+    $stmt = $db->prepare("SELECT full_name, phone, email, birth_date, gender, bio, contract_agreed FROM users WHERE username = :username");
     $stmt->bindParam(':username', $_SESSION['username']);
     $stmt->execute();
     $values = $stmt->fetch(PDO::FETCH_ASSOC);
