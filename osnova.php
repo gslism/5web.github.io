@@ -202,7 +202,7 @@ else {
         $someGroupName = $_POST['someGroupName'];
         $bio = $_POST['bio'];
         $checkt = $_POST['checkt'];
-        $stmt = $db->prepare("UPDATE users SET full_name = :full_name, phone = :phone, email = :email, birth_date = :birth_date, gender = :gender, bio = :bio, contract_agreed = :contract_agreed WHERE login = :username");
+        $stmt = $db->prepare("UPDATE users SET full_name = :full_name, phone = :phone, email = :email, birth_date = :birth_date, gender = :gender, bio = :bio, contract_agreed = :contract_agreed WHERE username = :username");
         $stmt->bindParam(':full_name', $fio);
         $stmt->bindParam(':phone', $tel);
         $stmt->bindParam(':email', $email);
