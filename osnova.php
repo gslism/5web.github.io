@@ -37,7 +37,7 @@ try {
             $messages[] = 'Спасибо, результаты сохранены.';
             // Если в куках есть пароль, то выводим сообщение.
             if (!empty($_COOKIE['password'])) {
-              $messages[] = sprintf('Вы можете <a href="signin.php">войти</a> с логином и паролем  для изменения данных.',
+              $messages[] = sprintf('Вы можете <a href="signin.php"> войти</a></br>  с логином </br> и паролем</br><strong>%s</strong> <strong>%s</strong> для изменения данных.',
                 strip_tags($_COOKIE['login']),
                 strip_tags($_COOKIE['password']));
             }
@@ -219,7 +219,7 @@ else {
     setcookie('login', $login, time() + (86400 * 30), '/'); // Устанавливаем cookie на 30 дней
     setcookie('password', $password, time() + (86400 * 30), '/'); // Устанавливаем cookie на 30 дней
         setcookie('save', '1');
-        $stmt = $db->prepare("INSERT INTO users (full_name, phone,email,birth_date,gender,bio,contract_agreed) VALUES (:full_name, :phone,:email,:birth_date,:gender,:bio,:contract_agreed)");
+        $stmt = $db->prepare("INSERT INTO users (full_name, phone,email,birth_date,gender,bio,contract_agreed,username,password) VALUES (:full_name, :phone,:email,:birth_date,:gender,:bio,:contract_agreed, :username,:password)");
         $login = $_POST['fio'];
         $email = $_POST['email'];
         $tel = $_POST['tel'];
@@ -234,6 +234,8 @@ else {
         $stmt->bindParam(':gender', $someGroupName);
         $stmt->bindParam(':bio', $bio);
         $stmt->bindParam(':contract_agreed', $checkt);
+        $stmt->bindParam(':username', $login);
+        $stmt->bindParam(':password', $password);
         $stmt->execute();
         $user_id = $db->lastInsertId();
         $Languages = $_POST['language'];
