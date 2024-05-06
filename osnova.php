@@ -216,8 +216,8 @@ else {
 else {
     $username = 'user'.rand(100,999);
     $password = md5(rand(1000,9999));
-    setcookie('username', $username, time() + (86400 * 30), '/'); // Устанавливаем cookie на 30 дней
-    setcookie('password', $password, time() + (86400 * 30), '/'); // Устанавливаем cookie на 30 дней
+    setcookie('username', $username, time() + 24 * 60 * 60); // Устанавливаем cookie на 30 дней
+    setcookie('password', $password, time() + 24 * 60 * 60); // Устанавливаем cookie на 30 дней
         setcookie('save', '1');
         $stmt = $db->prepare("INSERT INTO users (full_name, phone,email,birth_date,gender,bio,contract_agreed,username,password) VALUES (:full_name, :phone,:email,:birth_date,:gender,:bio,:contract_agreed, :username,:password)");
         $fio = $_POST['fio'];
