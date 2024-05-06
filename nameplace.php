@@ -1,6 +1,6 @@
 <?php
 require_once ('osnova.php');
-$login = $_POST['fio'];
+$fio = $_POST['fio'];
 $tel = $_POST['tel'];
 $email = $_POST['email'];
 $date = $_POST['date'];

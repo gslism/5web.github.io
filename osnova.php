@@ -8,9 +8,9 @@ $db = new PDO(
     [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
 );
 try {
-    function isValidName($login)
+    function isValidName($fio)
     {
-        return preg_match('/^[А-ЯЁёа-я\s]+$/u', $login);
+        return preg_match('/^[А-ЯЁёа-я\s]+$/u', $fio);
     }
 
     function isValidPhone($tel)
@@ -220,14 +220,14 @@ else {
     setcookie('password', $password, time() + (86400 * 30), '/'); // Устанавливаем cookie на 30 дней
         setcookie('save', '1');
         $stmt = $db->prepare("INSERT INTO users (full_name, phone,email,birth_date,gender,bio,contract_agreed,username,password) VALUES (:full_name, :phone,:email,:birth_date,:gender,:bio,:contract_agreed, :username,:password)");
-        $login = $_POST['fio'];
+        $fio = $_POST['fio'];
         $email = $_POST['email'];
         $tel = $_POST['tel'];
         $date = $_POST['date'];
         $someGroupName = $_POST['someGroupName'];
         $bio = $_POST['bio'];
         $checkt = $_POST['checkt'];
-        $stmt->bindParam(':full_name', $login);
+        $stmt->bindParam(':full_name', $fio);
         $stmt->bindParam(':phone', $tel);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':birth_date', $date);
