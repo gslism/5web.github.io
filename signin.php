@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 } else {
     try {
         $login = $_POST['login'];
-        $query = "SELECT * FROM users WHERE login = :username ";
+        $query = "SELECT * FROM users WHERE username = :username ";
         $stmt = $db->prepare($query);
         $stmt->bindParam(':username', $login);
         $stmt->execute();
