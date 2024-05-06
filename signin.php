@@ -53,9 +53,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                     <label for="validationCustom01" class="form-label">Пароль</label>
                     <input class="form-control rounded-pill" name="password" />
                     </br>
-                    <input class="custom-btn btn-1" type="submit" value="Войти" />
+                    <input class="btn btn-primary " type="submit" value="Войти" />
                     </br>
-                    <input class="custom-btn btn-1" type="submit" value="Выйти">
+                    <input class="btn btn-primary " type="submit" value="Выйти">
             </div>
         </div>
         <?php
@@ -63,16 +63,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 } else {
     try {
         $login = $_POST['login'];
-        $query = "SELECT * FROM users WHERE login = :login ";
+        $query = "SELECT * FROM users WHERE login = :username ";
         $stmt = $db->prepare($query);
-        $stmt->bindParam(':login', $login);
+        $stmt->bindParam(':username', $login);
         $stmt->execute();
         if ($stmt->rowCount() > 0) {
             if (!isset($_SESSION)) {
                 session_start();
             }
             $_SESSION['login'] = $login;
-            $_SESSION['uid'] = '123';
+            $_SESSION['password'] = '123';
             header('Location: osnova.php');
             exit();
         }

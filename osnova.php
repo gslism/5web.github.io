@@ -37,8 +37,7 @@ try {
             $messages[] = 'Спасибо, результаты сохранены.';
             // Если в куках есть пароль, то выводим сообщение.
             if (!empty($_COOKIE['password'])) {
-              $messages[] = sprintf('Вы можете <a href="signin.php">войти</a> с логином <strong>%s</strong>
-                и паролем <strong>%s</strong> для изменения данных.',
+              $messages[] = sprintf('Вы можете <a href="signin.php">войти</a> с логином и паролем  для изменения данных.',
                 strip_tags($_COOKIE['login']),
                 strip_tags($_COOKIE['password']));
             }
@@ -109,8 +108,8 @@ if (
     empty($errors) && !empty($_COOKIE[session_name()]) &&
     session_start() && !empty($_SESSION['login'])
 ) {
-    $stmt = $db->prepare("SELECT full_name, phone, email, birth_date, gender, bio, contract_agreed FROM users WHERE login = :login");
-    $stmt->bindParam(':login', $_SESSION['login']);
+    $stmt = $db->prepare("SELECT full_name, phone, email, birth_date, gender, bio, contract_agreed FROM users WHERE login = :username");
+    $stmt->bindParam(':username', $_SESSION['login']);
     $stmt->execute();
     $values = $stmt->fetch(PDO::FETCH_ASSOC);
     printf('Имя пользователя: %s<br>', $values['full_name']);
@@ -121,7 +120,7 @@ if (
     printf('Выберите языки программирования: %s<br>', $values['language']);
     printf('О себе: %s<br>', $values['bio']);
     printf('Согласие на условия: %s<br>', $values['contract_agreed']);
-    printf('Вход с логином %s, uid %d', $_SESSION['login'], $_SESSION['uid']);
+    printf('Вход с логином %s, password %d', $_SESSION['login'], $_SESSION['password']);
 }
 include('index.php');
 }
@@ -211,7 +210,7 @@ else {
         $stmt->bindParam(':gender', $someGroupName);
         $stmt->bindParam(':bio', $bio);
         $stmt->bindParam(':contract_agreed', $checkt);
-        $stmt->bindParam(':login', $_SESSION['login']);
+        $stmt->bindParam(':username', $_SESSION['login']);
         $stmt->execute();
 }
 else {
