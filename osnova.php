@@ -106,10 +106,10 @@ $values['checkt'] = empty($_COOKIE['checkt_value']) ? '' : $_COOKIE['checkt_valu
 $values['language'] = empty($_COOKIE['language_value']) ? '' : strip_tags($_COOKIE['language_value']);
 if (
     empty($errors) && !empty($_COOKIE[session_name()]) &&
-    session_start() && !empty($_SESSION['login'])
+    session_start() && !empty($_SESSION['username'])
 ) {
     $stmt = $db->prepare("SELECT full_name, phone, email, birth_date, gender, bio, contract_agreed FROM users WHERE login = :username");
-    $stmt->bindParam(':username', $_SESSION['login']);
+    $stmt->bindParam(':username', $_SESSION['username']);
     $stmt->execute();
     $values = $stmt->fetch(PDO::FETCH_ASSOC);
     printf('Имя пользователя: %s<br>', $values['full_name']);
@@ -120,7 +120,7 @@ if (
     printf('Выберите языки программирования: %s<br>', $values['language']);
     printf('О себе: %s<br>', $values['bio']);
     printf('Согласие на условия: %s<br>', $values['contract_agreed']);
-    printf('Вход с логином %s, password %d', $_SESSION['login'], $_SESSION['password']);
+    printf('Вход с логином %s, password %d', $_SESSION['username'], $_SESSION['password']);
 }
 include('index.php');
 }
@@ -192,7 +192,7 @@ else {
       }
       // Проверяем меняются ли ранее сохраненные данные или отправляются новые.
   if (!empty($_COOKIE[session_name()]) &&
-  session_start() && !empty($_SESSION['login'])) {
+  session_start() && !empty($_SESSION['username'])) {
 // TODO: перезаписать данные в БД новыми данными,
 // кроме логина и пароля.
         $fio = $_POST['fio'];
@@ -210,13 +210,13 @@ else {
         $stmt->bindParam(':gender', $someGroupName);
         $stmt->bindParam(':bio', $bio);
         $stmt->bindParam(':contract_agreed', $checkt);
-        $stmt->bindParam(':username', $_SESSION['login']);
+        $stmt->bindParam(':username', $_SESSION['username']);
         $stmt->execute();
 }
 else {
-    $login = 'user'.rand(100,999);
+    $username = 'user'.rand(100,999);
     $password = md5(rand(1000,9999));
-    setcookie('login', $login, time() + (86400 * 30), '/'); // Устанавливаем cookie на 30 дней
+    setcookie('username', $username, time() + (86400 * 30), '/'); // Устанавливаем cookie на 30 дней
     setcookie('password', $password, time() + (86400 * 30), '/'); // Устанавливаем cookie на 30 дней
         setcookie('save', '1');
         $stmt = $db->prepare("INSERT INTO users (full_name, phone,email,birth_date,gender,bio,contract_agreed,username,password) VALUES (:full_name, :phone,:email,:birth_date,:gender,:bio,:contract_agreed, :username,:password)");
@@ -234,7 +234,7 @@ else {
         $stmt->bindParam(':gender', $someGroupName);
         $stmt->bindParam(':bio', $bio);
         $stmt->bindParam(':contract_agreed', $checkt);
-        $stmt->bindParam(':username', $login);
+        $stmt->bindParam(':username', $username);
         $stmt->bindParam(':password', $password);
         $stmt->execute();
         $user_id = $db->lastInsertId();

@@ -8,4 +8,5 @@ $someGroupName = $_POST['someGroupName'];
 $language[] = $_POST['language'];
 $bio = $_POST['bio'];
 $checkt = $_POST['checkt'];
+$username;
 ?>

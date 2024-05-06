@@ -11,7 +11,7 @@ header('Content-Type: text/html; charset=UTF-8');
 $session_started = false;
 if ($_COOKIE[session_name()] && session_start()) {
     $session_started = true;
-    if (!empty($_SESSION['login'])) {
+    if (!empty($_SESSION['username'])) {
         $_SESSION = array();
         session_destroy();
         // Удаляем куки сессии
@@ -21,7 +21,7 @@ if ($_COOKIE[session_name()] && session_start()) {
     }
 }
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    if (isset($_SESSION['login'])) {
+    if (isset($_SESSION['username'])) {
         header('Location: index.php');
         exit();
     } else {
@@ -62,16 +62,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     }
 } else {
     try {
-        $login = $_POST['login'];
+        $username = $_POST['username'];
         $query = "SELECT * FROM users WHERE username = :username ";
         $stmt = $db->prepare($query);
-        $stmt->bindParam(':username', $login);
+        $stmt->bindParam(':username', $username);
         $stmt->execute();
         if ($stmt->rowCount() > 0) {
             if (!isset($_SESSION)) {
                 session_start();
             }
-            $_SESSION['login'] = $login;
+            $_SESSION['username'] = $username;
             $_SESSION['password'] = '123';
             header('Location: osnova.php');
             exit();
@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }
 
 
-if (isset($_SESSION['login'])) {
+if (isset($_SESSION['username'])) {
     ?>
 
     <?php
