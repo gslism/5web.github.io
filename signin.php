@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             <div class="wrap1 lh-lg font-monospace">
                 <form action="" method="post">
                     <label for="validationCustom01" class="form-label">Логин</label>
-                    <input class="form-control rounded-pill" name="login" />
+                    <input class="form-control rounded-pill" name="username" />
                     <label for="validationCustom01" class="form-label">Пароль</label>
                     <input class="form-control rounded-pill" name="password" />
                     </br>
